@@ -1,0 +1,37 @@
+<div class="container">
+  <router-outlet>
+
+  </router-outlet>
+  <mat-toolbar class="toolbar">
+    <div class="logo-title-container" [routerLink]="['/logo']">
+      <div class="logo-container">
+        <img class="logo-img" src="../../assets/images/match logo.png">
+      </div>
+      <h1 class="title">Nomina</h1>
+    </div>
+    <div class="menu">
+      <div class="menu-option" [routerLink]="['/employee']">
+        <button mat-stroked-button color="primary" class="option-btn">Empleado</button>
+      </div>
+      <div class="menu-option" [routerLink]="['/transaction']">
+        <button mat-stroked-button color="primary" class="option-btn">Transaccion</button>
+      </div>
+      <div class="menu-option" [routerLink]="['/deduction-type']">
+        <button mat-stroked-button color="primary" class="option-btn">Tipo Deduccion</button>
+      </div>
+      <div class="menu-option" [routerLink]="['/income-type']">
+        <button mat-stroked-button color="primary" class="option-btn">Tipo Ingreso</button>
+      </div>
+      <div class="menu-option" [routerLink]="['/department']">
+        <button mat-stroked-button color="primary" class="option-btn">Departamento</button>
+      </div>
+    </div>
+
+    <div class="logo-title-container">
+      <div class="menu-option">
+        <button mat-stroked-button color="primary" class="option-btn" (click)="onOut()">Salir</button>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>
+

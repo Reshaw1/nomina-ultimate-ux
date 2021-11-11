@@ -1,0 +1,59 @@
+<div class="container">
+  <mat-card class="card">
+    <mat-card-title>Tipo de Deduccion</mat-card-title>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Ver">
+          <ng-template matTabContent>
+            <div class="card-content">
+              <ag-grid-angular
+              class="grid ag-grid ag-theme-alpine"
+              [columnDefs]="colDef"
+              [defaultColDef]="defaultColDef"
+              [rowData]="rowData"
+              [pagination]="true"
+              [suppressMenuHide]="true"
+              (cellValueChanged)="onCellValueChanged($event)"
+              (selectionChanged)="onSelectionChanged($event)"
+              [gridOptions]="gridOptions"
+              >
+              </ag-grid-angular>
+              <div class="grid-buttons">
+                <button mat-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
+                <button mat-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Insertar">
+          <ng-template matTabContent>
+            <div class="card-content">
+              <div class="form">
+                <h2>Ingrese los datos del Tipo de Deduccion</h2>
+                <form class="form" #deductionTypeForm="ngForm">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input type="text" matInput [(ngModel)]="deductionType.name" name="name" placeholder="Descuento AFP" #nameInput="ngModel" required>
+                    <mat-error *ngIf="nameInput.errors?.required && nameInput.touched">
+                      El nombre es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Porcentaje Salarial</mat-label>
+                    <input type="number" matInput [(ngModel)]="deductionType.salaryPercentage" name="salary" placeholder="7.2" #salaryInput="ngModel" required>
+                    <mat-error *ngIf="salaryInput.errors?.required && salaryInput.touched">
+                      El salario es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="grid-buttons">
+                    <button mat-button color="primary" [disabled]="deductionTypeForm.status == 'INVALID'" (click)="onCreateDeductionType()">Crear Tipo de Deduccion</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
