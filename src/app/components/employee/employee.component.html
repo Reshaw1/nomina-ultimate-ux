@@ -1,0 +1,95 @@
+<div class="container">
+  <mat-card class="card">
+    <mat-card-title>Empleados</mat-card-title>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Ver">
+          <ng-template matTabContent>
+            <div class="card-content">
+              <ag-grid-angular
+              class="grid ag-grid ag-theme-alpine"
+              [columnDefs]="colDef"
+              [defaultColDef]="defaultColDef"
+              [rowData]="rowData"
+              [pagination]="true"
+              [suppressMenuHide]="true"
+              (cellValueChanged)="onCellValueChanged($event)"
+              (selectionChanged)="onSelectionChanged($event)"
+              [gridOptions]="gridOptions"
+              >
+              </ag-grid-angular>
+              <div class="grid-buttons">
+                <button mat-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
+                <button mat-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Insertar">
+          <ng-template matTabContent>
+            <div class="card-content">
+              <div class="form" #employeeForm="ngForm">
+                <h2>Ingrese los datos del Empleado</h2>
+                <form class="form" #employeeForm>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input type="text" matInput [(ngModel)]="employee.name" name="name" placeholder="Juan Perez" #nameInput="ngModel" required>
+                    <mat-error *ngIf="nameInput.errors?.required && nameInput.touched">
+                      El nombre es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Cedula</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      [(ngModel)]="employee.cardId"
+                      name="cardId"
+                      placeholder="000-0000000-0"
+                      #cardInput="ngModel"
+                      pattern="[0-9]{3}-[0-9]{7}-[0-9]{1}"
+                      required>
+                    <mat-error *ngIf="cardInput.errors?.required && cardInput.touched">
+                      La cedula es <strong>requerido!</strong>
+                    </mat-error>
+                    <mat-error *ngIf="cardInput.errors?.pattern && cardInput.touched">
+                      No cumple el <strong>Patron!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Departamento</mat-label>
+                    <mat-select #select required>
+                      <mat-option *ngFor="let department of departments" [value]="department.id" [(ngModel)]="employee.departmentId">
+                        {{ department.deparmentName }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="select.errors?.required && select.touched">
+                      El depastamento es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Puesto</mat-label>
+                    <input type="text" matInput [(ngModel)]="employee.job" name="job" placeholder="Programador" #jobInput="ngModel" required>
+                    <mat-error *ngIf="jobInput.errors?.required && jobInput.touched">
+                      El puesto es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Salario</mat-label>
+                    <input type="number" matInput [(ngModel)]="employee.salary" name="salary" placeholder="25000.00" #salaryInput="ngModel" required>
+                    <mat-error *ngIf="salaryInput.errors?.required && salaryInput.touched">
+                      El salario es <strong>requerido!</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="grid-buttons">
+                    <button mat-button color="primary" [disabled]="employeeForm.status == 'INVALID'" (click)="onCreateEmployee()">Crear Empleado</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
