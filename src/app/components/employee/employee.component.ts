@@ -26,13 +26,8 @@ export class EmployeeComponent implements OnInit {
     { field: 'department.departmentName', colId: "3", headerName: 'Departament'},
     { field: 'employee.job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
     { field: 'employee.salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
-<<<<<<< HEAD
-    { field: 'employee.select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
-    { field: 'employee.state', colId: "7", headerName: 'state', hide: true}
-=======
     { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
     { field: 'state', colId: "7", headerName: 'state', hide: true}
->>>>>>> ac596029430a595b947b1b50bfd13badbb5b582c
   ]
 
   defaultColDef = {
