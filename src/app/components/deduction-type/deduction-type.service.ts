@@ -7,7 +7,7 @@ import { DeductionType } from 'src/app/models/deductionType';
 })
 export class DeductionTypeService {
 
-  baseUrl = "http://localhost:44359/api/deductiontype"
+  baseUrl = "https://localhost:44359/api/deductiontype"
   constructor(private httpClient: HttpClient) { }
 
   getDeductionType() {

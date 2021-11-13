@@ -8,7 +8,7 @@ import { IncomeType } from 'src/app/models/incomeType';
 })
 export class IncomeTypeService {
 
-  baseUrl = "http://localhost:44359/api/incomeType"
+  baseUrl = "https://localhost:44359/api/incomeType"
   constructor(private httpClient: HttpClient) { }
 
   getIncomeType() {
