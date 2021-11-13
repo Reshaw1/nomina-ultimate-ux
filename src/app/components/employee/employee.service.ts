@@ -7,7 +7,11 @@ import { Employee } from 'src/app/models/employee';
 })
 export class EmployeeService {
 
+<<<<<<< HEAD
   baseUrl = "https://localhost:44359/api/employee"
+=======
+  baseUrl = "https://localhost:44359/api/Employees"
+>>>>>>> ac596029430a595b947b1b50bfd13badbb5b582c
   constructor(private httpClient: HttpClient) { }
 
   getEmployee() {

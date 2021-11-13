@@ -65,8 +65,8 @@ export class DeductionTypeComponent implements OnInit {
     this.gridEdited = true;
     var node;
     node = params.node;
-    if (this.gridOptions.api.getValue("7", node) != "New") {
-      node.setDataValue("7", "true");
+    if (this.gridOptions.api.getValue("5", node) != "New") {
+      node.setDataValue("5", "true");
     }
   }
 
