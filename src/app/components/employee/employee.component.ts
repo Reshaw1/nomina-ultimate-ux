@@ -20,14 +20,14 @@ export class EmployeeComponent implements OnInit {
   departments: Department[] = [];
 
   colDef : ColDef[] = [
-    { field: 'id', colId: "0", headerName: 'ID', hide: true},
-    { field: 'name', colId: "1", headerName: 'Nombre', filter: 'agTextColumnFilter'},
-    { field: 'cardId', colId: "2", headerName: 'Cedula', filter: 'agTextColumnFilter'},
+    { field: 'employee.id', colId: "0", headerName: 'ID', hide: true},
+    { field: 'employee.name', colId: "1", headerName: 'Nombre', filter: 'agTextColumnFilter'},
+    { field: 'employee.cardId', colId: "2", headerName: 'Cedula', filter: 'agTextColumnFilter'},
     { field: 'department.departmentName', colId: "3", headerName: 'Departament'},
-    { field: 'job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
-    { field: 'salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
-    { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
-    { field: 'state', colId: "7", headerName: 'state', hide: true}
+    { field: 'employee.job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
+    { field: 'employee.salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
+    { field: 'employee.select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
+    { field: 'employee.state', colId: "7", headerName: 'state', hide: true}
   ]
 
   defaultColDef = {
