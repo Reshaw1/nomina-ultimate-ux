@@ -11,6 +11,9 @@ import { DepartmentService } from './department.service';
 })
 export class DepartmentComponent implements OnInit {
 
+  gridEdited: boolean = false;
+  selection: boolean = false;
+
   department: Department = new Department();
 
   colDef : ColDef[] = [
@@ -49,7 +52,29 @@ export class DepartmentComponent implements OnInit {
         this.api.sizeColumnsToFit();
       },
     }
+
+    this.departmentService.getDepartment().subscribe((res: any)=>{
+      this.rowData = res;
+    });
   }
+
+  onCellValueChanged(params) {
+    this.gridEdited = true;
+    var node;
+    node = params.node;
+    if (this.gridOptions.api.getValue("3", node) != "New") {
+      node.setDataValue("3", "true");
+    }
+  }
+
+  onSelectionChanged(event) {
+    if (this.gridOptions.api.getSelectedRows().length == 1) {
+      this.selection = true;
+    } else {
+      this.selection = false;
+    }
+  }
+
 
   onDeleteRow() {
     var selectedRows = this.gridOptions.api.getSelectedRows();
@@ -70,7 +95,7 @@ export class DepartmentComponent implements OnInit {
     var modifiedRows: Array<number> = [];
     for (let i = 0; i < this.gridOptions.api.getDisplayedRowCount(); i++) {
       row = this.gridOptions.api.getDisplayedRowAtIndex(i);
-      if (this.gridOptions.api.getValue("2", row) == "true") {
+      if (this.gridOptions.api.getValue("3", row) == "true") {
         modifiedRows.push(i);
       }
     }
@@ -97,7 +122,10 @@ export class DepartmentComponent implements OnInit {
   onCreateDepartment() {
     console.log(JSON.parse(JSON.stringify(this.department)));
     this.departmentService.createDepartment(this.department).subscribe(res => {
-      window.alert("Se ha insertado Correctamente")
+      window.alert("Se ha insertado Correctamente");
+      this.departmentService.getDepartment().subscribe((res: any)=>{
+        this.rowData = res;
+      });
     })
   }
 }

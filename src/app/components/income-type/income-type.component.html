@@ -19,8 +19,8 @@
               >
               </ag-grid-angular>
               <div class="grid-buttons">
-                <button mat-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
-                <button mat-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
+                <button mat-raised-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
+                <button mat-raised-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
               </div>
             </div>
           </ng-template>
@@ -46,7 +46,7 @@
                     </mat-error>
                   </mat-form-field>
                   <div class="grid-buttons">
-                    <button mat-button color="primary" [disabled]="inputTypeForm.status == 'INVALID'" (click)="onCreateIncomeType(inputTypeForm)">Crear Tipo de Ingreso</button>
+                    <button mat-raised-button color="primary" [disabled]="inputTypeForm.status == 'INVALID'" (click)="onCreateIncomeType(inputTypeForm)">Crear Tipo de Ingreso</button>
                   </div>
                 </form>
               </div>

@@ -13,6 +13,8 @@ import { IncomeTypeService } from './income-type.service';
 export class IncomeTypeComponent implements OnInit {
 
   incomeType: IncomeType = new IncomeType();
+  gridEdited:boolean=false;
+  selection:boolean = false;
 
   colDef : ColDef[] = [
     { field: 'id', colId: "0", headerName: 'ID', hide: true},
@@ -77,7 +79,7 @@ export class IncomeTypeComponent implements OnInit {
     var modifiedRows: Array<number> = [];
     for (let i = 0; i < this.gridOptions.api.getDisplayedRowCount(); i++) {
       row = this.gridOptions.api.getDisplayedRowAtIndex(i);
-      if (this.gridOptions.api.getValue("2", row) == "true") {
+      if (this.gridOptions.api.getValue("5", row) == "true") {
         modifiedRows.push(i);
       }
     }
@@ -107,7 +109,28 @@ export class IncomeTypeComponent implements OnInit {
     this.incomeType.status = "Activo";
     console.log(JSON.parse(JSON.stringify(this.incomeType)));
     this.incomeTypeService.createIncomeType(this.incomeType).subscribe(res => {
-      window.alert("Se ha insertado Correctamente")
-    })
+      window.alert("Se ha insertado Correctamente");
+      this.incomeTypeService.getIncomeType().subscribe((res: any) => {
+        this.rowData = res;
+      });
+    });
+
+  }
+
+  onCellValueChanged(params) {
+    this.gridEdited = true;
+    var node;
+    node = params.node;
+    if (this.gridOptions.api.getValue("5", node) != "New") {
+      node.setDataValue("5", "true");
+    }
+  }
+
+  onSelectionChanged(event) {
+    if (this.gridOptions.api.getSelectedRows().length == 1) {
+      this.selection = true;
+    } else {
+      this.selection = false;
+    }
   }
 }

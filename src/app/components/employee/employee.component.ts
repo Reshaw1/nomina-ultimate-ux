@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { Department } from 'src/app/models/department';
 import { Employee } from 'src/app/models/employee';
+import { DepartmentService } from '../department/department.service';
 import { EmployeeService } from './employee.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class EmployeeComponent implements OnInit {
   selection: boolean = false;
 
   employee: Employee;
-  department: Department = new Department();
+  // department: Department = new Department();
 
   departments: Department[] = [];
 
@@ -27,7 +28,8 @@ export class EmployeeComponent implements OnInit {
     { field: 'employee.job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
     { field: 'employee.salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
     { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
-    { field: 'state', colId: "7", headerName: 'state', hide: true}
+    { field: 'state', colId: "7", headerName: 'state', hide: true},
+    { field:"department.id",colId:"8",hide:true}
   ]
 
   defaultColDef = {
@@ -43,7 +45,7 @@ export class EmployeeComponent implements OnInit {
 
   gridOptions : GridOptions ;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,private departmentService:DepartmentService) { }
 
   ngOnInit(): void {
     this.employee = new Employee();
@@ -64,6 +66,10 @@ export class EmployeeComponent implements OnInit {
 
     this.employeeService.getEmployee().subscribe((res: any) => {
       this.rowData = res;
+    });
+
+    this.departmentService.getDepartment().subscribe((res: any)=>{
+      this.departments = res;
     })
   }
 
@@ -88,9 +94,8 @@ export class EmployeeComponent implements OnInit {
     var selectedRows = this.gridOptions.api.getSelectedRows();
     var selectedNodes = this.gridOptions.api.getSelectedNodes();
     for(let row of selectedRows) {
-
       // Delete
-      this.employeeService.deleteEmployee(selectedRows[0].id).subscribe(res => {
+      this.employeeService.deleteEmployee(selectedRows[0].employee.id).subscribe(res => {
         this.gridOptions.api.applyTransaction({ remove: selectedRows });
       }, err => {
         window.alert("Hubo un error al borrar el registro")
@@ -119,7 +124,7 @@ export class EmployeeComponent implements OnInit {
       this.employee.id = this.gridOptions.api.getValue("0", row2);
       this.employee.name = this.gridOptions.api.getValue("1", row2);
       this.employee.cardId = this.gridOptions.api.getValue("2", row2);
-      this.employee.departmentId = this.gridOptions.api.getValue("3", row2);
+      this.employee.departmentId = this.gridOptions.api.getValue("8", row2);
       this.employee.job = this.gridOptions.api.getValue("4", row2);
       console.log(JSON.parse(JSON.stringify(this.employee)))
 
@@ -133,7 +138,10 @@ export class EmployeeComponent implements OnInit {
   onCreateEmployee() {
     console.log(JSON.parse(JSON.stringify(this.employee)));
     this.employeeService.createEmployee(this.employee).subscribe(res => {
-      window.alert("Se ha insertado Correctamente")
+      window.alert("Se ha insertado Correctamente");
+      this.employeeService.getEmployee().subscribe((res: any) => {
+        this.rowData = res;
+      });
     })
   }
 

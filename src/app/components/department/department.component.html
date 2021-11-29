@@ -19,8 +19,8 @@
               >
               </ag-grid-angular>
               <div class="grid-buttons">
-                <button mat-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
-                <button mat-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
+                <button mat-raised-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
+                <button mat-raised-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
               </div>
             </div>
           </ng-template>
@@ -30,7 +30,7 @@
             <div class="card-content">
               <div class="form">
                 <h2>Ingrese los datos del Departamento</h2>
-                <form class="form">
+                <form class="form" #departmentForm="ngForm">
                   <mat-form-field appearance="fill">
                     <mat-label>Nombre del Departamento</mat-label>
                     <input type="text" matInput [(ngModel)]="department.departmentName" name="name" placeholder="Contabilidad" #nameInput="ngModel" required>
@@ -39,7 +39,7 @@
                     </mat-error>
                   </mat-form-field>
                   <div class="grid-buttons">
-                    <button mat-button color="primary" [disabled]="deductionTypeForm.status == 'INVALID'" (click)="onCreateDepartment()">Crear Departamento</button>
+                    <button mat-raised-button color="primary" [disabled]="departmentForm.status == 'INVALID'" (click)="onCreateDepartment()">Crear Departamento</button>
                   </div>
                 </form>
               </div>

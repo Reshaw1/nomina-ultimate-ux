@@ -126,7 +126,11 @@ export class DeductionTypeComponent implements OnInit {
     this.deductionType.status = "Activo";
     console.log(JSON.parse(JSON.stringify(this.deductionType)));
     this.deductionTypeService.createDeductionType(this.deductionType).subscribe(res => {
-      window.alert("Se ha insertado Correctamente")
+      window.alert("Se ha insertado Correctamente");
+
+      this.deductionTypeService.getDeductionType().subscribe((res: any) => {
+        this.rowData = res;
+      })
     })
   }
 }
