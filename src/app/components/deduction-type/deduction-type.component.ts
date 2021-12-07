@@ -22,7 +22,7 @@ export class DeductionTypeComponent implements OnInit {
     { field: 'name', colId: "1", headerName: 'Nombre'},
     { field: 'salaryPercentage', colId: "2", headerName: 'Porcentaje Salarial'},
     { field: 'status', colId: "3", headerName: 'Estado'},
-    { field: 'select', colId: "4", headerName: 'Seleccionar', checkboxSelection: true},
+    { field: 'select', colId: "4", headerName: 'Seleccionar', checkboxSelection: true, editable: false},
     { field: 'state', colId: "5", headerName: 'state', hide: true}
   ]
 

@@ -18,6 +18,9 @@ import { LogoComponent } from './components/logo/logo.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 //AG Grid
 import { AgGridModule } from 'ag-grid-angular';
@@ -28,6 +31,8 @@ import { TransactionComponent } from './components/transaction/transaction.compo
 import { DeductionTypeComponent } from './components/deduction-type/deduction-type.component';
 import { IncomeTypeComponent } from './components/income-type/income-type.component';
 import { DepartmentComponent } from './components/department/department.component';
+import { DepartmentSelectComponent } from './components/selects/department-select/department-select.component';
+import { EmployeeSelectComponent } from './components/selects/employee-select/employee-select.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,9 @@ import { DepartmentComponent } from './components/department/department.componen
     DeductionTypeComponent,
     IncomeTypeComponent,
     DepartmentComponent,
-    LogoComponent
+    LogoComponent,
+    DepartmentSelectComponent,
+    EmployeeSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,9 @@ import { DepartmentComponent } from './components/department/department.componen
     MatFormFieldModule,
     MatTabsModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
     AgGridModule.withComponents([]),
     BrowserAnimationsModule
   ],

@@ -3,6 +3,7 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 import { Department } from 'src/app/models/department';
 import { Employee } from 'src/app/models/employee';
 import { DepartmentService } from '../department/department.service';
+import { DepartmentSelectComponent } from '../selects/department-select/department-select.component';
 import { EmployeeService } from './employee.service';
 
 @Component({
@@ -24,12 +25,13 @@ export class EmployeeComponent implements OnInit {
     { field: 'employee.id', colId: "0", headerName: 'ID', hide: true},
     { field: 'employee.name', colId: "1", headerName: 'Nombre', filter: 'agTextColumnFilter'},
     { field: 'employee.cardId', colId: "2", headerName: 'Cedula', filter: 'agTextColumnFilter'},
-    { field: 'department.departmentName', colId: "3", headerName: 'Departament'},
+    { field: 'department', colId: "3", headerName: 'Departamento',  cellRenderer: "departmentCellRenderer", },
+    // { field: 'department.departmentName', colId: "3", headerName: 'Departamento'},
     { field: 'employee.job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
     { field: 'employee.salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
-    { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true},
+    { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true, editable: false},
     { field: 'state', colId: "7", headerName: 'state', hide: true},
-    { field:"department.id",colId:"8",hide:true}
+    { field: "department.id",colId:"8",hide:true}
   ]
 
   defaultColDef = {
@@ -44,6 +46,8 @@ export class EmployeeComponent implements OnInit {
   ]
 
   gridOptions : GridOptions ;
+
+  frameworkComponents;
 
   constructor(private employeeService: EmployeeService,private departmentService:DepartmentService) { }
 
@@ -71,6 +75,10 @@ export class EmployeeComponent implements OnInit {
     this.departmentService.getDepartment().subscribe((res: any)=>{
       this.departments = res;
     })
+
+    this.frameworkComponents = {
+      departmentCellRenderer: DepartmentSelectComponent,
+    };
   }
 
   onCellValueChanged(params) {

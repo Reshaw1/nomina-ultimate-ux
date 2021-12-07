@@ -19,7 +19,7 @@ export class DepartmentComponent implements OnInit {
   colDef : ColDef[] = [
     { field: 'id', colId: "0", headerName: 'ID', hide: true},
     { field: 'departmentName', colId: "1", headerName: 'Nombre'},
-    { field: 'select', colId: "2", headerName: 'Seleccionar', checkboxSelection: true},
+    { field: 'select', colId: "2", headerName: 'Seleccionar', checkboxSelection: true, editable: false},
     { field: 'state', colId: "3", headerName: 'state', hide: true}
   ]
 

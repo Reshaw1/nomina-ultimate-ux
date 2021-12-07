@@ -50,3 +50,25 @@ input::-webkit-inner-spin-button {
   align-items: center;
   justify-content: space-between;
 }
+
+.form-field {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.75em 0.75em 0 0.75em;
+  margin-bottom: 1.34375em;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-height: 65px;
+  width: 215px;
+}
+
+.radio-group {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: row;
+}
+
+.deduction-selector {
+  margin-left: 5%;
+}

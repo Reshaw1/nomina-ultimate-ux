@@ -1,28 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Employee } from 'src/app/models/employee';
+import { Transaction } from 'src/app/models/transaction';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
 
-  baseUrl = "http://localhost:44359/api/employee"
+  baseUrl = "http://localhost:44359/api/transaction"
   constructor(private httpClient: HttpClient) { }
 
-  getEmployee() {
+  getTransaction() {
     return this.httpClient.get(this.baseUrl)
   }
 
-  createEmployee(employee: Employee) {
-    return this.httpClient.post(this.baseUrl, JSON.parse(JSON.stringify(employee)), {responseType: "text"})
+  createTransaction(transaction: Transaction) {
+    return this.httpClient.post(this.baseUrl, JSON.parse(JSON.stringify(transaction)), {responseType: "text"})
   }
 
-  updateEmployee(employee: Employee) {
-    return this.httpClient.put(this.baseUrl, JSON.parse(JSON.stringify(employee)), {responseType: "text"})
+  updateTransaction(transaction: Transaction) {
+    return this.httpClient.put(this.baseUrl, JSON.parse(JSON.stringify(transaction)), {responseType: "text"})
   }
 
-  deleteEmployee(id: number) {
+  deleteTransaction(id: number) {
     return this.httpClient.delete(this.baseUrl + "/" + id, {responseType: "text"})
   }
 }
