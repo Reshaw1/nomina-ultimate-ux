@@ -20,6 +20,7 @@
               </ag-grid-angular>
               <div class="grid-buttons">
                 <button mat-raised-button color="warn" [disabled]="!selection" (click)="onDeleteRow()">Borrar</button>
+                <button mat-raised-button color="accent" (click)="onContabilizeTransactions()">Contabilizar</button>
                 <button mat-raised-button color="primary" [disabled]="!gridEdited" (click)="onSaveChanges()">Guardar Cambios</button>
               </div>
             </div>

@@ -179,4 +179,28 @@ export class TransactionComponent implements OnInit {
       });
     })
   }
+
+  onContabilizeTransactions() {
+    var displayedRows = this.gridOptions.api.getRenderedNodes();
+
+    var notContabilizedTrans: number[] = [];
+
+    if(displayedRows.length > 0 || displayedRows.some((row) => {return row.data.status == "No Contabilizado"})) {
+      displayedRows.forEach(row => {
+        if(row.data.status == "No Contabilizado") {
+          notContabilizedTrans.push(row.data.id);
+        }
+      })
+
+      this.transactionService.contabilizeTransactions(notContabilizedTrans).subscribe((res: any) => {
+        if(displayedRows.length == 1) {
+          window.alert("Se han contabilizado una factura correctamente")
+        } else {
+          window.alert("Se han contabilizado " + displayedRows.length + " facturas correctamente")
+        }
+      })
+    } else {
+      window.alert("No se encontraron facturas por Contabilizar!")
+    }
+  }
 }

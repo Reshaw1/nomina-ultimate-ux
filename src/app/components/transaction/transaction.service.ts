@@ -25,4 +25,8 @@ export class TransactionService {
   deleteTransaction(id: number) {
     return this.httpClient.delete(this.baseUrl + "/" + id, {responseType: "text"})
   }
+
+  contabilizeTransactions(ids: number[]) {
+    return this.httpClient.post(this.baseUrl.replace("transaction", "accountingEntry"), JSON.parse(JSON.stringify({ transactions: ids })) , {responseType: "text"})
+  }
 }
