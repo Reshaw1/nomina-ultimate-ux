@@ -32,7 +32,7 @@ jobs:
         with:
           app-name: 'NominaUltimateUX'
           publish-profile: $
-          package: ./dist/nomina
+          path: ./dist/nomina
 
   deploy:
     runs-on: windows-latest
@@ -54,4 +54,4 @@ jobs:
           app-name: 'NominaUltimateUX'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0D49A357782E4DD784433AFE998846A0 }}
-          package: .
+          path: .
