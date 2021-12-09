@@ -52,6 +52,7 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'NominaUltimateUX'
-          slot-name: 'Production'
+          slot-name: 'production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0D49A357782E4DD784433AFE998846A0 }}
-          path: .
+          path: ./dist/nomina
+          package: ./dist/nomina
