@@ -12,7 +12,7 @@ import { EmployeeService } from '../../employee/employee.service';
 export class EmployeeSelectComponent implements AgRendererComponent {
 
   employees: Employee[] = [];
-  value: number;
+  cellValue: number;
 
   cellRendererParams: ICellRendererParams;
 
@@ -21,16 +21,20 @@ export class EmployeeSelectComponent implements AgRendererComponent {
     throw new Error('Method not implemented.');
   }
   agInit(params: ICellRendererParams): void {
+    this.cellRendererParams = params;
     this.employeeService.getEmployee().subscribe((res: any) => {
       this.employees = res;
+      this.cellValue = params.node.data.employeeID;
     })
   }
   afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
     throw new Error('Method not implemented.');
   }
 
-  onSelectionChanged($event) {
-    this.cellRendererParams.node.setDataValue('1', this.value)
+  onSelectionChanged(event) {
+    console.log(event)
+    console.log(this.cellValue)
+    this.cellRendererParams.node.setDataValue('1', this.cellValue);
   }
 
 }

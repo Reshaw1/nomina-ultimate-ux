@@ -7,7 +7,7 @@ import { Transaction } from 'src/app/models/transaction';
 })
 export class TransactionService {
 
-  baseUrl = "http://localhost:44359/api/transaction"
+  baseUrl = "https://localhost:44359/api/transaction"
   constructor(private httpClient: HttpClient) { }
 
   getTransaction() {
@@ -27,6 +27,6 @@ export class TransactionService {
   }
 
   contabilizeTransactions(ids: number[]) {
-    return this.httpClient.post(this.baseUrl.replace("transaction", "accountingEntry"), JSON.parse(JSON.stringify({ transactions: ids })) , {responseType: "text"})
+    return this.httpClient.post(this.baseUrl.replace("transaction", "accountingEntry"), ids , {responseType: "text"})
   }
 }

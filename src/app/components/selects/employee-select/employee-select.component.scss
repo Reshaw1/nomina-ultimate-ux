@@ -1,0 +1,13 @@
+.select {
+  z-index: 10000;
+  color: black !important;
+  background-color: white;
+}
+
+.option {
+  color: black !important;
+}
+
+::ng-deep .mat-select-value {
+  color: black !important;
+}

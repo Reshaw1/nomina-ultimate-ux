@@ -21,8 +21,10 @@ export class DepartmentSelectComponent implements AgRendererComponent {
     throw new Error('Method not implemented.');
   }
   agInit(params: ICellRendererParams): void {
+    this.cellRendererParams = params;
     this.departmentService.getDepartment().subscribe((res: any) => {
       this.departments = res;
+      this.value = params.node.data.department.id;
     })
   }
   afterGuiAttached?(params?: IAfterGuiAttachedParams): void {

@@ -25,7 +25,7 @@ export class EmployeeComponent implements OnInit {
     { field: 'employee.id', colId: "0", headerName: 'ID', hide: true},
     { field: 'employee.name', colId: "1", headerName: 'Nombre', filter: 'agTextColumnFilter'},
     { field: 'employee.cardId', colId: "2", headerName: 'Cedula', filter: 'agTextColumnFilter'},
-    { field: 'department', colId: "3", headerName: 'Departamento',  cellRenderer: "departmentCellRenderer", },
+    { field: 'department.departmentName', colId: "3", headerName: 'Departamento',  cellRenderer: "departmentCellRenderer" },
     // { field: 'department.departmentName', colId: "3", headerName: 'Departamento'},
     { field: 'employee.job', colId: "4", headerName: 'Puesto', filter: 'agTextColumnFilter'},
     { field: 'employee.salary', colId: '5', headerName: 'Salario', filter: 'agNumberColumnFilter'},
@@ -49,7 +49,11 @@ export class EmployeeComponent implements OnInit {
 
   frameworkComponents;
 
-  constructor(private employeeService: EmployeeService,private departmentService:DepartmentService) { }
+  constructor(private employeeService: EmployeeService,private departmentService:DepartmentService) {
+    this.frameworkComponents = {
+      departmentCellRenderer: DepartmentSelectComponent,
+    };
+   }
 
   ngOnInit(): void {
     this.employee = new Employee();
@@ -75,10 +79,6 @@ export class EmployeeComponent implements OnInit {
     this.departmentService.getDepartment().subscribe((res: any)=>{
       this.departments = res;
     })
-
-    this.frameworkComponents = {
-      departmentCellRenderer: DepartmentSelectComponent,
-    };
   }
 
   onCellValueChanged(params) {
@@ -134,6 +134,7 @@ export class EmployeeComponent implements OnInit {
       this.employee.cardId = this.gridOptions.api.getValue("2", row2);
       this.employee.departmentId = this.gridOptions.api.getValue("8", row2);
       this.employee.job = this.gridOptions.api.getValue("4", row2);
+      this.employee.salary = this.gridOptions.api.getValue("5", row2);
       console.log(JSON.parse(JSON.stringify(this.employee)))
 
       // Call Service

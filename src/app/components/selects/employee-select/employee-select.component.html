@@ -1,5 +1,5 @@
-<mat-select name="select">
-  <mat-option *ngFor="let employee of employees" [(value)]="type" (selectionChange)="onSelectionChanged($event)">
-    {{ employee.name }}
+<mat-select [(ngModel)]="cellValue" name="select" (selectionChange)="onSelectionChanged($event)" class="select" #select="ngModel">
+  <mat-option *ngFor="let employee of employees" [value]="employee.employee.id" class="option">
+    {{ employee.employee.name }}
   </mat-option>
 </mat-select>

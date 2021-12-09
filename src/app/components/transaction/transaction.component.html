@@ -34,9 +34,9 @@
                 <form class="form" #transactionForm="ngForm">
                   <mat-form-field appearance="fill">
                     <mat-label>Empleado</mat-label>
-                    <mat-select #selectEmployee required>
-                      <mat-option *ngFor="let employee of employees" [value]="transaction.employeeId">
-                        {{ employee.name }}
+                    <mat-select #selectEmployee [(ngModel)]="transaction.employeeId" name="employee" #employee="ngModel" required>
+                      <mat-option *ngFor="let employee of employees" [value]="employee.employee.id">
+                        {{ employee.employee.name }}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="selectEmployee.errors?.required && selectEmployee.touched">
@@ -54,8 +54,8 @@
                   </div>
                   <mat-form-field appearance="fill" *ngIf="transactionType == 'Income'">
                     <mat-label>Tipo de Ingreso</mat-label>
-                    <mat-select #selectIncome required>
-                      <mat-option *ngFor="let incomeType of incomeTypes" [value]="transaction.incomeTypeId">
+                    <mat-select #selectIncome required [(ngModel)]="transaction.incomeTypeId" name="incomeType" #incomeTypeT="ngModel">
+                      <mat-option *ngFor="let incomeType of incomeTypes" [value]="incomeType.id">
                         {{ incomeType.name }}
                       </mat-option>
                     </mat-select>
@@ -65,8 +65,8 @@
                   </mat-form-field>
                   <mat-form-field appearance="fill" *ngIf="transactionType == 'Deduction'">
                     <mat-label>Tipo de Deduccion</mat-label>
-                    <mat-select #selectDeduction required>
-                      <mat-option *ngFor="let deductionType of deductionTypes" [value]="transaction.deductionTypeId">
+                    <mat-select #selectDeduction required [(ngModel)]="transaction.deductionTypeId" name="deductionTypeId" #deductionTypeIdT="ngModel">
+                      <mat-option *ngFor="let deductionType of deductionTypes" [value]="deductionType.id">
                         {{ deductionType.name }}
                       </mat-option>
                     </mat-select>

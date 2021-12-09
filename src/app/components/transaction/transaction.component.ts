@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { DeductionType } from 'src/app/models/deductionType';
 import { Department } from 'src/app/models/department';
@@ -8,6 +9,7 @@ import { Transaction } from 'src/app/models/transaction';
 import { DeductionTypeService } from '../deduction-type/deduction-type.service';
 import { EmployeeService } from '../employee/employee.service';
 import { IncomeTypeService } from '../income-type/income-type.service';
+import { EmployeeSelectComponent } from '../selects/employee-select/employee-select.component';
 import { TransactionService } from './transaction.service';
 
 @Component({
@@ -33,22 +35,70 @@ export class TransactionComponent implements OnInit {
   gridEdited: boolean = false;
   selection: boolean = false;
 
+
+  public DateFilterParams = {
+    filterOptions: ['equals', 'inRange', 'greaterThanOrEqual', 'lessThanOrEqual'],
+    defaultOption: 'inRange',
+    inRangeInclusive: true,
+    suppressAndOrCondition: true,
+    comparator: function (filterLocalDateAtMidnight, cellValue) {
+      var datepipe= new DatePipe('en_US');
+      var dateAsString = datepipe.transform(cellValue, 'dd-MM-yyyy');
+      if (dateAsString == null) return -1;
+      var dateParts = dateAsString.split('-');
+      var cellDate = new Date(
+        Number(dateParts[2]),
+        Number(dateParts[1]) - 1,
+        Number(dateParts[0])
+      );
+
+      if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+        return 0;
+      }
+
+      if (cellDate < filterLocalDateAtMidnight) {
+        return -1;
+      }
+
+      if (cellDate > filterLocalDateAtMidnight) {
+        return 1;
+      }
+
+      return 1
+    },
+    browserDatePicker: true,
+    minValidYear: 2000,
+  };
+
   colDef : ColDef[] = [
     { field: 'id', colId: "0", headerName: 'ID', hide: true},
-    { field: 'employeeId', colId: "1", headerName: 'idEmpleado', hide: true},
-    { field: 'incomeTypeId', colId: "2", headerName: 'idIngreso', hide: true},
-    { field: 'deductionTypeId', colId: "3", headerName: 'idDeduccion', hide: true},
-    { field: 'date', colId: "4", headerName: 'Fecha', type: 'date'},
-    { field: 'amount', colId: '5', headerName: 'Monto', editable: false },
+    { field: 'employee', colId: '10', cellRenderer: "employeeSelect"},
+    { field: 'employeeID', colId: "1", headerName: 'idEmpleado', hide: true},
+    { field: 'null', colId: "2", headerName: 'Tipo Transaccion', editable : false,
+      valueFormatter: (params) => {
+        if(params.data.incomeType) {
+          return  params.data.incomeType.name
+        } else {
+          return params.data.deductionType.name
+        }}
+      },
+    // { field: 'deductionType.name', colId: "3", headerName: 'Tipo Deduccion', editable : false},
+    { field: 'date', colId: "4", headerName: 'Fecha', filter: 'agDateColumnFilter', filterParams: this.DateFilterParams,
+      valueFormatter: (params) => {var datepipe= new DatePipe('en_US');
+      var date = datepipe.transform(params.value, 'dd-MM-yyyy')
+      return date}},
+    { field: 'ammount', colId: '5', headerName: 'Monto', editable: false },
     { field: 'status', colId: '5', headerName: 'Estado', editable: false},
     { field: 'select', colId: "6", headerName: 'Seleccionar', checkboxSelection: true, editable: false},
-    { field: 'state', colId: "7", headerName: 'state', hide: true}
+    { field: 'state', colId: "7", headerName: 'state', hide: true},
+    { field: 'deductionType.id', colId: '8', hide: true},
+    { field: 'incomeType.id', colId:'9', hide: true},
   ]
 
   defaultColDef = {
     // make every column editable
     editable: true,
-    resizeable:false,
+    resizeable: true,
     suppressMovable:true,
     // make every column use 'text' filter by default
   }
@@ -81,6 +131,10 @@ export class TransactionComponent implements OnInit {
       },
     }
 
+    this.frameworkComponents = {
+      employeeSelect : EmployeeSelectComponent
+    }
+
     this.transactionService.getTransaction().subscribe((res: any) => {
       this.rowData = res;
     });
@@ -96,8 +150,6 @@ export class TransactionComponent implements OnInit {
     this.deductionTypeService.getDeductionType().subscribe((res: any) => {
       this.deductionTypes = res;
     });
-
-
   }
 
   onCellValueChanged(params) {
@@ -123,7 +175,7 @@ export class TransactionComponent implements OnInit {
     for(let row of selectedRows) {
 
       // Delete
-      this.transactionService.deleteTransaction(selectedRows[0].ID).subscribe(res => {
+      this.transactionService.deleteTransaction(selectedRows[0].id).subscribe(res => {
         this.gridOptions.api.applyTransaction({ remove: selectedRows });
       }, err => {
         window.alert("Hubo un error al borrar el registro")
@@ -149,9 +201,10 @@ export class TransactionComponent implements OnInit {
       row2 = this.gridOptions.api.getDisplayedRowAtIndex(x);
 
       //Set New Values
+      this.transaction.id = this.gridOptions.api.getValue("0", row2);
       this.transaction.employeeId = this.gridOptions.api.getValue("0", row2);
-      this.transaction.incomeTypeId = this.gridOptions.api.getValue("1", row2);
-      this.transaction.deductionTypeId = this.gridOptions.api.getValue("2", row2);
+      this.transaction.incomeTypeId = this.gridOptions.api.getValue("9", row2);
+      this.transaction.deductionTypeId = this.gridOptions.api.getValue("8", row2);
       this.transaction.date = this.gridOptions.api.getValue("3", row2);
       this.transaction.amount = this.gridOptions.api.getValue("4", row2);
       this.transaction.status = this.gridOptions.api.getValue("5", row2);
@@ -193,11 +246,15 @@ export class TransactionComponent implements OnInit {
       })
 
       this.transactionService.contabilizeTransactions(notContabilizedTrans).subscribe((res: any) => {
+        this.transactionService.getTransaction().subscribe((res: any) => {
+          this.rowData = res;
+        });
         if(displayedRows.length == 1) {
           window.alert("Se han contabilizado una factura correctamente")
         } else {
           window.alert("Se han contabilizado " + displayedRows.length + " facturas correctamente")
         }
+
       })
     } else {
       window.alert("No se encontraron facturas por Contabilizar!")
