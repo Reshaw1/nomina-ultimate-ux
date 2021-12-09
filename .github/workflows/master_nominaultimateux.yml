@@ -35,7 +35,7 @@ jobs:
           path: ./dist/nomina
 
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     environment:
       name: 'Production'
@@ -54,5 +54,4 @@ jobs:
           app-name: 'NominaUltimateUX'
           slot-name: 'production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0D49A357782E4DD784433AFE998846A0 }}
-          path: ./dist/nomina
           package: ./dist/nomina
