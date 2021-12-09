@@ -249,10 +249,10 @@ export class TransactionComponent implements OnInit {
         this.transactionService.getTransaction().subscribe((res: any) => {
           this.rowData = res;
         });
-        if(displayedRows.length == 1) {
+        if(notContabilizedTrans.length == 1) {
           window.alert("Se han contabilizado una factura correctamente")
         } else {
-          window.alert("Se han contabilizado " + displayedRows.length + " facturas correctamente")
+          window.alert("Se han contabilizado " + notContabilizedTrans.length + " facturas correctamente")
         }
 
       })
