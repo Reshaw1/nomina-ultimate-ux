@@ -7,7 +7,7 @@ import { Transaction } from 'src/app/models/transaction';
 })
 export class TransactionService {
 
-  baseUrl = "https://localhost:44359/api/transaction"
+  baseUrl = "https://nominaunapec.azurewebsites.net/api/transaction"
   constructor(private httpClient: HttpClient) { }
 
   getTransaction() {

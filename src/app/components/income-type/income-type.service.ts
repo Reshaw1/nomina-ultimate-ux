@@ -8,7 +8,7 @@ import { IncomeType } from 'src/app/models/incomeType';
 })
 export class IncomeTypeService {
 
-  baseUrl = "https://localhost:44359/api/incomeType"
+  baseUrl = "https://nominaunapec.azurewebsites.net/api/incomeType"
   constructor(private httpClient: HttpClient) { }
 
   getIncomeType() {

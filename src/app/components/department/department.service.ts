@@ -8,7 +8,7 @@ import { Employee } from 'src/app/models/employee';
 })
 export class DepartmentService {
 
-  baseUrl = "https://localhost:44359/api/department"
+  baseUrl = "https://nominaunapec.azurewebsites.net/api/department"
   constructor(private httpClient: HttpClient) { }
 
   getDepartment() {

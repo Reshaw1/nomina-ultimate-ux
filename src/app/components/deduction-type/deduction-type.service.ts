@@ -7,7 +7,7 @@ import { DeductionType } from 'src/app/models/deductionType';
 })
 export class DeductionTypeService {
 
-  baseUrl = "https://localhost:44359/api/deductiontype"
+  baseUrl = "https://nominaunapec.azurewebsites.net/api/deductiontype"
   constructor(private httpClient: HttpClient) { }
 
   getDeductionType() {

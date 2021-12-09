@@ -7,7 +7,7 @@ import { Employee } from 'src/app/models/employee';
 })
 export class EmployeeService {
 
-  baseUrl = "https://localhost:44359/api/Employees"
+  baseUrl = "https://nominaunapec.azurewebsites.net/api/Employees"
   constructor(private httpClient: HttpClient) { }
 
   getEmployee() {
